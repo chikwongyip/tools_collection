@@ -6,9 +6,10 @@ import { prisma } from '@/lib/prisma';
 // PUT /api/categories/[id] - Update a category (requires authentication)
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const session = await getServerSession(authOptions);
 
     if (!session) {
@@ -19,7 +20,7 @@ export async function PUT(
     const { name, slug, description } = body;
 
     const category = await prisma.category.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         name,
         slug,
@@ -40,9 +41,10 @@ export async function PUT(
 // DELETE /api/categories/[id] - Delete a category (requires authentication)
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const session = await getServerSession(authOptions);
 
     if (!session) {
@@ -50,7 +52,7 @@ export async function DELETE(
     }
 
     await prisma.category.delete({
-      where: { id: params.id }
+      where: { id }
     });
 
     return NextResponse.json({ success: true });

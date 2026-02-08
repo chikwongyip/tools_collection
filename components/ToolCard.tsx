@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 
 interface Tool {
@@ -5,6 +8,7 @@ interface Tool {
   name: string;
   url: string;
   description: string;
+  detailedDescription?: string | null;
   icon?: string | null;
   category: {
     name: string;
@@ -16,6 +20,8 @@ interface ToolCardProps {
 }
 
 export default function ToolCard({ tool }: ToolCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <div className='group relative bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700'>
       <div className='p-6'>
@@ -47,8 +53,8 @@ export default function ToolCard({ tool }: ToolCardProps) {
           </div>
         </div>
 
-        {/* Action Button */}
-        <div className='mt-4 pt-4 border-t border-gray-200 dark:border-gray-700'>
+        {/* Action Buttons */}
+        <div className='mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between'>
           <a
             href={tool.url}
             target='_blank'
@@ -70,7 +76,46 @@ export default function ToolCard({ tool }: ToolCardProps) {
               />
             </svg>
           </a>
+
+          {tool.detailedDescription && (
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className='text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 flex items-center gap-1 transition-colors'
+            >
+              {isExpanded ? '收起详情' : '详细内容'}
+              <svg
+                className={`w-4 h-4 transition-transform ${
+                  isExpanded ? 'rotate-180' : ''
+                }`}
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='m19 9-7 7-7-7'
+                />
+              </svg>
+            </button>
+          )}
         </div>
+
+        {/* Detailed Description Panel */}
+        {tool.detailedDescription && (
+          <div
+            className={`overflow-hidden transition-all duration-300 ease-in-out ${
+              isExpanded ? 'max-h-96 mt-4' : 'max-h-0'
+            }`}
+          >
+            <div className='p-4 bg-gray-50 dark:bg-gray-900/50 rounded-lg border border-gray-100 dark:border-gray-700'>
+              <p className='text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed'>
+                {tool.detailedDescription}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Hover Effect Overlay */}

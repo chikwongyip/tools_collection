@@ -8,6 +8,7 @@ interface Tool {
   name: string;
   url: string;
   description: string;
+  detailedDescription?: string | null;
   icon?: string | null;
   featured: boolean;
   category: {
@@ -31,6 +32,7 @@ export default function ToolsPage() {
     name: '',
     url: '',
     description: '',
+    detailedDescription: '',
     icon: '',
     categoryId: '',
     featured: false
@@ -83,6 +85,7 @@ export default function ToolsPage() {
           name: '',
           url: '',
           description: '',
+          detailedDescription: '',
           icon: '',
           categoryId: '',
           featured: false
@@ -100,6 +103,7 @@ export default function ToolsPage() {
       name: tool.name,
       url: tool.url,
       description: tool.description,
+      detailedDescription: tool.detailedDescription || '',
       icon: tool.icon || '',
       categoryId: tool.category.id,
       featured: tool.featured
@@ -137,6 +141,7 @@ export default function ToolsPage() {
                 name: '',
                 url: '',
                 description: '',
+                detailedDescription: '',
                 icon: '',
                 categoryId: '',
                 featured: false
@@ -270,11 +275,11 @@ export default function ToolsPage() {
                   </div>
                   <div>
                     <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-                      描述 *
+                      简短描述 *
                     </label>
                     <textarea
                       required
-                      rows={4}
+                      rows={2}
                       value={formData.description}
                       onChange={(e) =>
                         setFormData({
@@ -282,6 +287,23 @@ export default function ToolsPage() {
                           description: e.target.value
                         })
                       }
+                      className='w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white'
+                    />
+                  </div>
+                  <div>
+                    <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
+                      页面显示详细描述
+                    </label>
+                    <textarea
+                      rows={6}
+                      value={formData.detailedDescription}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          detailedDescription: e.target.value
+                        })
+                      }
+                      placeholder='输入工具的详细功能介绍、使用方法等内容...'
                       className='w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white'
                     />
                   </div>

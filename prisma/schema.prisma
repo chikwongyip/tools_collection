@@ -23,16 +23,17 @@ model Category {
 }
 
 model Tool {
-  id          String   @id @default(cuid())
-  name        String
-  url         String
-  description String   @db.Text
-  icon        String?
-  featured    Boolean  @default(false)
-  categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                  String   @id @default(cuid())
+  name                String
+  url                 String
+  description         String   @db.Text
+  detailedDescription String?  @db.Text
+  icon                String?
+  featured            Boolean  @default(false)
+  categoryId          String
+  category            Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
   @@index([categoryId])
   @@index([featured])

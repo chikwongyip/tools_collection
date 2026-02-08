@@ -74,7 +74,15 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { name, url, description, icon, categoryId, featured } = body;
+    const {
+      name,
+      url,
+      description,
+      detailedDescription,
+      icon,
+      categoryId,
+      featured
+    } = body;
 
     if (!name || !url || !description || !categoryId) {
       return NextResponse.json(
@@ -88,6 +96,7 @@ export async function POST(request: Request) {
         name,
         url,
         description,
+        detailedDescription,
         icon,
         categoryId,
         featured: featured || false
