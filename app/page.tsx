@@ -1,6 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation'; // Import useRouter
+import Link from 'next/link'; // Keep Link for the admin login
 import ToolCard from '@/components/ToolCard';
 import CategoryFilter from '@/components/CategoryFilter';
 
@@ -9,6 +11,7 @@ interface Tool {
   name: string;
   url: string;
   description: string;
+  detailedDescription?: string | null;
   icon?: string | null;
   category: {
     name: string;
@@ -16,16 +19,15 @@ interface Tool {
 }
 
 export default function HomePage() {
+  const router = useRouter(); // Initialize useRouter
   const [tools, setTools] = useState<Tool[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    null
+  );
   const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    fetchTools();
-  }, [selectedCategory, searchQuery]);
-
-  const fetchTools = async () => {
+  const fetchTools = useCallback(async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams();
@@ -40,6 +42,14 @@ export default function HomePage() {
     } finally {
       setLoading(false);
     }
+  }, [selectedCategory, searchQuery]);
+
+  useEffect(() => {
+    fetchTools();
+  }, [fetchTools]);
+
+  const handleToolClick = (toolId: string) => {
+    router.push(`/tool/${toolId}`);
   };
 
   return (
@@ -56,12 +66,12 @@ export default function HomePage() {
                 发现和探索优质工具
               </p>
             </div>
-            <a
-              href='/admin/login'
+            <Link
+              href='/admin/login' // Use Link for internal navigation
               className='px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors'
             >
               管理后台
-            </a>
+            </Link>
           </div>
 
           {/* Search Bar */}
@@ -126,7 +136,11 @@ export default function HomePage() {
             ) : tools.length > 0 ? (
               <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>
                 {tools.map((tool) => (
-                  <ToolCard key={tool.id} tool={tool} />
+                  <ToolCard
+                    key={tool.id}
+                    tool={tool}
+                    onClick={() => handleToolClick(tool.id)}
+                  />
                 ))}
               </div>
             ) : (

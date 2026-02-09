@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { Prisma } from '@prisma/client';
 
 // GET /api/tools - Get all tools with optional filtering
 export async function GET(request: Request) {
@@ -14,7 +15,8 @@ export async function GET(request: Request) {
     const limit = parseInt(searchParams.get('limit') || '12');
     const skip = (page - 1) * limit;
 
-    const where: any = {};
+    const where: Prisma.ToolWhereInput = {};
+
 
     if (categoryId) {
       where.categoryId = categoryId;
@@ -23,7 +25,8 @@ export async function GET(request: Request) {
     if (search) {
       where.OR = [
         { name: { contains: search } },
-        { description: { contains: search } }
+        { description: { contains: search } },
+        { detailedDescription: { contains: search } }
       ];
     }
 

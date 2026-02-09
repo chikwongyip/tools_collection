@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -28,7 +29,7 @@ export default function LoginPage() {
       } else {
         router.push('/admin/dashboard');
       }
-    } catch (error) {
+    } catch {
       setError('登录失败，请重试');
     } finally {
       setLoading(false);
@@ -101,12 +102,12 @@ export default function LoginPage() {
           </form>
 
           <div className='mt-6 text-center'>
-            <a
+            <Link
               href='/'
               className='text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors'
             >
               返回首页
-            </a>
+            </Link>
           </div>
         </div>
       </div>

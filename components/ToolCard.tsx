@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
+import Image from 'next/image';
 
 interface Tool {
   id: string;
@@ -20,18 +19,20 @@ interface ToolCardProps {
 }
 
 export default function ToolCard({ tool }: ToolCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
   return (
-    <div className='group relative bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700'>
+    <div
+      className='group relative bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700'
+    >
       <div className='p-6'>
         <div className='flex items-start gap-4'>
           {/* Icon */}
           <div className='flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-xl font-bold group-hover:scale-110 transition-transform duration-300'>
             {tool.icon ? (
-              <img
+              <Image
                 src={tool.icon}
                 alt={tool.name}
+                width={48}
+                height={48}
                 className='w-full h-full object-cover rounded-lg'
               />
             ) : (
@@ -59,6 +60,7 @@ export default function ToolCard({ tool }: ToolCardProps) {
             href={tool.url}
             target='_blank'
             rel='noopener noreferrer'
+            onClick={(e) => e.stopPropagation()}
             className='inline-flex items-center text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors'
           >
             访问工具
@@ -79,14 +81,11 @@ export default function ToolCard({ tool }: ToolCardProps) {
 
           {tool.detailedDescription && (
             <button
-              onClick={() => setIsExpanded(!isExpanded)}
               className='text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 flex items-center gap-1 transition-colors'
             >
-              {isExpanded ? '收起详情' : '详细内容'}
+              详细内容
               <svg
-                className={`w-4 h-4 transition-transform ${
-                  isExpanded ? 'rotate-180' : ''
-                }`}
+                className='w-4 h-4'
                 fill='none'
                 stroke='currentColor'
                 viewBox='0 0 24 24'
@@ -101,21 +100,6 @@ export default function ToolCard({ tool }: ToolCardProps) {
             </button>
           )}
         </div>
-
-        {/* Detailed Description Panel */}
-        {tool.detailedDescription && (
-          <div
-            className={`overflow-hidden transition-all duration-300 ease-in-out ${
-              isExpanded ? 'max-h-96 mt-4' : 'max-h-0'
-            }`}
-          >
-            <div className='p-4 bg-gray-50 dark:bg-gray-900/50 rounded-lg border border-gray-100 dark:border-gray-700'>
-              <p className='text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed'>
-                {tool.detailedDescription}
-              </p>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Hover Effect Overlay */}
