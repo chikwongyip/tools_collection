@@ -6,7 +6,7 @@ import { prisma } from '@/lib/prisma';
 // GET /api/tools/[id] - Get a single tool
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const tool = await prisma.tool.findUnique({
@@ -33,7 +33,7 @@ export async function GET(
 // PUT /api/tools/[id] - Update a tool (requires authentication)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -82,7 +82,7 @@ export async function PUT(
 // DELETE /api/tools/[id] - Delete a tool (requires authentication)
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
