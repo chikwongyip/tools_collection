@@ -32,7 +32,7 @@ export async function GET(
 
 // PUT /api/tools/[id] - Update a tool (requires authentication)
 export async function PUT(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {

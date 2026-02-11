@@ -1,11 +1,11 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { Prisma } from '@prisma/client';
 
 // GET /api/tools - Get all tools with optional filtering
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const categoryId = searchParams.get('categoryId');
@@ -16,7 +16,6 @@ export async function GET(request: Request) {
     const skip = (page - 1) * limit;
 
     const where: Prisma.ToolWhereInput = {};
-
 
     if (categoryId) {
       where.categoryId = categoryId;
@@ -68,7 +67,7 @@ export async function GET(request: Request) {
 }
 
 // POST /api/tools - Create a new tool (requires authentication)
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
 
