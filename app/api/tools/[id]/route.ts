@@ -9,8 +9,9 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const tool = await prisma.tool.findUnique({
-      where: { id: params.id },
+      where: { id: id },
       include: {
         category: true
       }
@@ -42,6 +43,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
     const body = await request.json();
     const {
       name,
@@ -54,7 +56,7 @@ export async function PUT(
     } = body;
 
     const tool = await prisma.tool.update({
-      where: { id: params.id },
+      where: { id: id },
       data: {
         name,
         url,
