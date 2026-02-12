@@ -22,9 +22,7 @@ export default function HomePage() {
   const router = useRouter(); // Initialize useRouter
   const [tools, setTools] = useState<Tool[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    null
-  );
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
   const fetchTools = useCallback(async () => {
@@ -48,9 +46,9 @@ export default function HomePage() {
     fetchTools();
   }, [fetchTools]);
 
-  const handleToolClick = (toolId: string) => {
-    router.push(`/tool/${toolId}`);
-  };
+  // const handleToolClick = (toolId: string) => {
+  //   router.push(`/tool/${toolId}`);
+  // };
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800'>
@@ -139,7 +137,7 @@ export default function HomePage() {
                   <ToolCard
                     key={tool.id}
                     tool={tool}
-                    onClick={() => handleToolClick(tool.id)}
+                    // onClick={() => handleToolClick(tool.id)}
                   />
                 ))}
               </div>
