@@ -19,7 +19,7 @@ interface Tool {
 }
 
 export default function HomePage() {
-  const router = useRouter(); // Initialize useRouter
+  // const router = useRouter(); // Initialize useRouter
   const [tools, setTools] = useState<Tool[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
