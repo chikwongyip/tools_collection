@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import Providers from '@/components/Providers';
-
+import Script from 'next/script';
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin']
@@ -25,6 +25,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='zh-CN'>
+      <head>
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID}`}
+          crossOrigin='anonymous'
+          strategy='afterInteractive' // 建议在页面交互后加载，优化首屏速度
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

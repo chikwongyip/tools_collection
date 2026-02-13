@@ -1,11 +1,11 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation'; // Import useRouter
+// import { useRouter } from 'next/navigation'; // Import useRouter
 import Link from 'next/link'; // Keep Link for the admin login
 import ToolCard from '@/components/ToolCard';
 import CategoryFilter from '@/components/CategoryFilter';
-
+import AdBanner from '@/components/AdBanner';
 interface Tool {
   id: string;
   name: string;
@@ -99,7 +99,7 @@ export default function HomePage() {
           </div>
         </div>
       </header>
-
+      <AdBanner dataAdSlot='8200363412' />
       {/* Main Content */}
       <main className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
         <div className='grid grid-cols-1 lg:grid-cols-4 gap-8'>
