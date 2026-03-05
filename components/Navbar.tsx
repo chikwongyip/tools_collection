@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 
 interface Category {
   id: string;
@@ -11,12 +10,9 @@ interface Category {
 }
 
 export default function Navbar() {
-  const searchParams = useSearchParams();
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    searchParams.get('categoryId') || null
-  );
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -35,11 +31,24 @@ export default function Navbar() {
     fetchCategories();
   }, []);
 
-  // 监听searchParams变化，更新选中的分类
+  // 在客户端获取URL参数
   useEffect(() => {
-    const categoryId = searchParams.get('categoryId');
-    setSelectedCategory(categoryId || null);
-  }, [searchParams]);
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const categoryId = urlParams.get('categoryId');
+      setSelectedCategory(categoryId || null);
+
+      // 监听URL变化
+      const handlePopState = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoryId = urlParams.get('categoryId');
+        setSelectedCategory(categoryId || null);
+      };
+
+      window.addEventListener('popstate', handlePopState);
+      return () => window.removeEventListener('popstate', handlePopState);
+    }
+  }, []);
 
   return (
     <nav className='bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10'>
