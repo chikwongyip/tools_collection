@@ -2,10 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 // import { useRouter } from 'next/navigation'; // Import useRouter
-import Link from 'next/link'; // Keep Link for the admin login
 import ToolCard from '@/components/ToolCard';
 import CategoryFilter from '@/components/CategoryFilter';
 import AdBanner from '@/components/AdBanner';
+import Navbar from '@/components/Navbar';
 interface Tool {
   id: string;
   name: string;
@@ -52,53 +52,36 @@ export default function HomePage() {
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800'>
-      {/* Header */}
-      <header className='bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700'>
-        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6'>
-          <div className='flex items-center justify-between'>
-            <div>
-              <h1 className='text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent'>
-                工具导航
-              </h1>
-              <p className='mt-1 text-sm text-gray-600 dark:text-gray-400'>
-                发现和探索优质工具
-              </p>
-            </div>
-            <Link
-              href='/admin/login' // Use Link for internal navigation
-              className='px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors'
-            >
-              管理后台
-            </Link>
-          </div>
+      {/* Navbar */}
+      <Navbar />
 
-          {/* Search Bar */}
-          <div className='mt-6'>
-            <div className='relative'>
-              <input
-                type='text'
-                placeholder='搜索工具...'
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className='w-full px-4 py-3 pl-12 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white'
+      {/* Search Bar */}
+      <div className='bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4'>
+          <div className='relative'>
+            <input
+              type='text'
+              placeholder='搜索工具...'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className='w-full px-4 py-3 pl-12 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white'
+            />
+            <svg
+              className='absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
               />
-              <svg
-                className='absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
-                />
-              </svg>
-            </div>
+            </svg>
           </div>
         </div>
-      </header>
+      </div>
       <AdBanner dataAdSlot='8200363412' />
       {/* Main Content */}
       <main className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
