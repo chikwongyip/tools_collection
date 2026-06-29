@@ -3,6 +3,49 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+// 开发工具下拉菜单
+function DevToolsDropdown() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className='relative'>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        onBlur={() => setTimeout(() => setIsOpen(false), 200)}
+        className='px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1'
+      >
+        🔧 开发工具
+        <svg
+          className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          fill='none'
+          stroke='currentColor'
+          viewBox='0 0 24 24'
+        >
+          <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7' />
+        </svg>
+      </button>
+      {isOpen && (
+        <div className='absolute top-full left-0 mt-1 w-52 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50'>
+          <Link
+            href='/dev-tools'
+            className='block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 border-b border-gray-100 dark:border-gray-700 mb-1'
+            onClick={() => setIsOpen(false)}
+          >
+            📦 全部工具
+          </Link>
+          <Link
+            href='/dev-tools/json-format'
+            className='block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400'
+            onClick={() => setIsOpen(false)}
+          >
+            📋 JSON 格式化
+          </Link>
+        </div>
+      )}
+    </div>
+  );
+}
+
 interface Category {
   id: string;
   name: string;
@@ -104,6 +147,7 @@ export default function Navbar() {
           </div>
 
           <div className='flex items-center space-x-4'>
+            <DevToolsDropdown />
             <Link
               href='/wake-lock'
               className='px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors'
