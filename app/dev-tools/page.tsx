@@ -13,6 +13,14 @@ const devTools = [
     path: '/dev-tools/json-format',
     color: 'from-blue-500 to-purple-500'
   },
+  {
+    id: 'timestamp',
+    name: 'Unix 时间戳转换',
+    icon: '⏱️',
+    description: '日期时间与 Unix 时间戳相互转换，支持秒和毫秒单位',
+    path: '/dev-tools/timestamp',
+    color: 'from-green-500 to-teal-500'
+  },
   // 后续添加更多工具时在这里扩展
 ];
 
