@@ -105,6 +105,12 @@ export default function Navbar() {
 
           <div className='flex items-center space-x-4'>
             <Link
+              href='/wake-lock'
+              className='px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors'
+            >
+              🌞 屏幕常亮
+            </Link>
+            <Link
               href='/about'
               className='px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors'
             >
